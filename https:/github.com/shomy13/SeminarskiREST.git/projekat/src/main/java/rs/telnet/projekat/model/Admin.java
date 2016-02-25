@@ -6,37 +6,38 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Admin {
 	
 	private int id;
-	private String korisnickoime;
-	private String sifra;
+	private String user;
+	private String pass;
 	
 	public Admin() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Admin(String korisnickoime, String sifra) {
+	public Admin(String user, String pass) {
 		super();
-		this.korisnickoime = korisnickoime;
-		this.sifra = sifra;
+		this.user = user;
+		this.pass = pass;
 	}
-	
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getKorisnickoime() {
-		return korisnickoime;
+	public String getUser() {
+		return user;
 	}
-	public void setKorisnickoime(String korisnickoime) {
-		this.korisnickoime = korisnickoime;
+	public void setUser(String user) {
+		this.user = user;
 	}
-	public String getSifra() {
-		return sifra;
+	public String getPass() {
+		return pass;
 	}
-	public void setSifra(String sifra) {
-		this.sifra = sifra;
+	public void setPass(String pass) {
+		this.pass = pass;
 	}
+	
+	
 
 	
 	

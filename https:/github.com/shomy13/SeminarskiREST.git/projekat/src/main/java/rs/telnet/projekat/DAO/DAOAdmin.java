@@ -14,8 +14,8 @@ import rs.telnet.projekat.model.Admin;
 public class DAOAdmin {
 	  private DataSource ds;
 	  
-	  private static String EXISTADMIN = "SELECT * FROM admin where korisnickoime = ? and sifra=?";
-	  private static String UPDATEUSER = "UPDATE admin SET sifra = ? WHERE korisnickoime = ?";
+	  private static String EXISTADMIN = "SELECT * FROM admin where user = ? and pass=?";
+	  private static String UPDATEUSER = "UPDATE admin SET pass = ? WHERE user = ?";
 	  
 	  public DAOAdmin(){
 			try {
@@ -29,7 +29,7 @@ public class DAOAdmin {
 				}
 			}
 	  
-	  public boolean existAdmin(String korisnickoime, String sifra){
+	  public boolean existAdmin(String user, String pass){
 			Connection con = null;
 			PreparedStatement pstm = null;
 			ResultSet rs = null;
@@ -42,8 +42,8 @@ public class DAOAdmin {
 				pstm = con.prepareStatement(EXISTADMIN);
 
 				// DOPUNJAVANJE SQL STRINGA, SVAKI ? SE MORA PODESITI 
-				pstm.setString(1, korisnickoime);
-				pstm.setString(2, sifra);
+				pstm.setString(1, user);
+				pstm.setString(2, pass);
 				pstm.execute();
 
 	//****POCETAK	AKO UPIT VRACA REZULTAT TREBA SLEDECI DEO 
@@ -52,8 +52,8 @@ public class DAOAdmin {
 				if(rs.next()){ // if AKO UPIT VRACA JEDAN REZULTAT
 					admin = new Admin();
 					admin.setId(rs.getInt("id"));
-					admin.setKorisnickoime(rs.getString("korisnickoime"));
-					admin.setSifra(rs.getString("sifra"));
+					admin.setUser(rs.getString("user"));
+					admin.setPass(rs.getString("pass"));
 					
 					
 					return true;
