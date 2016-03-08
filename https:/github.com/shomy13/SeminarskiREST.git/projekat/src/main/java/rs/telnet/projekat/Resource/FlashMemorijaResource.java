@@ -11,7 +11,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import rs.telnet.projekat.model.FlashMemorija;
+import rs.telnet.projekat.authentication.Secure;
+import rs.telnet.projekat.model.Proizvod;
 import rs.telnet.projekat.services.FlashMemorijaService;
 
 @Path("/fmemorija")
@@ -22,20 +23,20 @@ public class FlashMemorijaResource {
 	FlashMemorijaService flashMemorijaService = new FlashMemorijaService();
 	
 	@GET
-	public ArrayList<FlashMemorija> GetAll(){
+	public ArrayList<Proizvod> GetAll(){
 		return flashMemorijaService.getAllFM();
 	}
 	
-	@GET
+	/*@GET
 	@Path("/{sifra}")
-	public FlashMemorija getBySifra(@PathParam("sifra") String sifra){
+	public Proizvod getBySifra(@PathParam("sifra") String sifra){
 		 return flashMemorijaService.getById(sifra);
 	}
 	
 	
 	@POST
 	
-	public void insertFlashMemorija( FlashMemorija fm){
+	public void insertFlashMemorija( Proizvod fm){
 		flashMemorijaService.insertFM(fm);
 	}
 		
@@ -44,6 +45,6 @@ public class FlashMemorijaResource {
 	@Path("/{memorija}")
 	public void deleteFlashMemorija(@PathParam("memorija") String memorija){
 		flashMemorijaService.deleteFM(memorija);
-	}
+	}*/
 
 }

@@ -9,7 +9,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import rs.telnet.projekat.model.FlashMemorija;
+import rs.telnet.projekat.model.Proizvod;
 
 import java.util.ArrayList;
 
@@ -17,13 +17,13 @@ public class DAOFlashMemorija {
 	
 	 private DataSource ds;
 	 	
-	   private static String SELECTFLASHMEMORIJA="SELECT *FROM flashmemorija";
-	   private static String INSERTFLASHMEMORIJA="INSERT INTO flashmemorija(sifra,proizvodjac,model,cena,kapacitet,slika,garancija,akcija) VALUES(?,?,?,?,?,?,?,?)";
+	   private static String SELECTFLASHMEMORIJA="SELECT *FROM proizvod WHERE vrsta = ?";
+	/*   private static String INSERTFLASHMEMORIJA="INSERT INTO flashmemorija(sifra,proizvodjac,model,cena,kapacitet,slika,garancija,akcija) VALUES(?,?,?,?,?,?,?,?)";
 	   private static String DELETEFLASHMEMORIJA = "DELETE  FROM flashmemorija WHERE sifra = ?";
 	   private static String GETFLASHMEMORIJAID = "SELECT * FROM flashmemorija WHERE sifra=?";
 	   private static String GETRFLASHMEMORIJA=  "SELECT * FROM flashmemorija ORDER BY RAND() LIMIT 1";
 	   private static String AKCIJAFLASHMEMORIJA = "SELECT * FROM flashmemorija WHERE akcija='1' ";
-	   private static String PRETRAGAFLASHMEMORIJA= "SELECT * FROM flashmemorija where proizvodjac=? OR kapacitet=? OR model=?";
+	   private static String PRETRAGAFLASHMEMORIJA= "SELECT * FROM flashmemorija where proizvodjac=? OR kapacitet=? OR model=?";*/
 	   
 	   public DAOFlashMemorija(){
 			try {
@@ -37,20 +37,20 @@ public class DAOFlashMemorija {
 				}
 			}
 	   
-	   public ArrayList<FlashMemorija> selectflashMemorija(){
+	   public ArrayList<Proizvod> selectflashMemorija(){
 			Connection con = null;
 			PreparedStatement pstm = null;
 			ResultSet rs = null;
 			// POMOCNE PROMENLJIVE ZA KONKRETNU METODU 
-			ArrayList<FlashMemorija> lo = new ArrayList<FlashMemorija>();
-			FlashMemorija fm = null;
+			ArrayList<Proizvod> lo = new ArrayList<Proizvod>();
+			Proizvod fm = null;
 					
 	            try {
 				con = ds.getConnection();
 				pstm = con.prepareStatement(SELECTFLASHMEMORIJA);
 
 				// DOPUNJAVANJE SQL STRINGA, SVAKI ? SE MORA PODESITI 
-				
+				pstm.setString(1,"FMem");
 				pstm.execute();
 
 	//****POCETAK AKO UPIT VRACA REZULTAT TREBA SLEDECI DEO 
@@ -58,17 +58,21 @@ public class DAOFlashMemorija {
 
 				while(rs.next()){ // if UMESTO while AKO UPIT VRACA JEDAN REZULTAT
 					// KREIRANJE INSTANCE KLASE PREKO PODRAZUMEVANOG KONSTRUKTORA
-					fm = new FlashMemorija();
+					fm = new Proizvod();
 					// SET-OVANJE SVIH ATRIBUTA KLASE SA ODGOVARAJUCIM VREDNOSTIMA IZ RESULTSET-A rs
-					fm.setAkcija(rs.getString("akcija"));
-					fm.setSifra(rs.getString("sifra"));
+					fm.setVrsta(rs.getString("vrsta"));
 					fm.setProizvodjac(rs.getString("proizvodjac"));
 					fm.setModel(rs.getString("model"));
-					fm.setKapacitet(rs.getString("kapacitet"));
 					fm.setSlika(rs.getString("slika"));
-					fm.setCena(rs.getFloat("cena"));
+					fm.setTip(rs.getString("tip"));
+					fm.setKapacitet(rs.getString("kapacitet"));
+					fm.setSocket(rs.getString("socket"));
+					fm.setTakt(rs.getString("takt"));
+					fm.setAkcija(rs.getByte("akcija"));
+					fm.setDijagonala(rs.getBigDecimal("dijagonala"));
+					fm.setCena(rs.getBigDecimal("cena"));
 					fm.setGarancija(rs.getInt("garancija"));
-					
+					fm.setId(rs.getInt("id"));
 					// DODAVANJE INSTANCE U LISTU AKO METODA VRACA LISTU, AKO NE VRACA ONDA NE TREBA 
 					lo.add(fm);
 				}
@@ -85,7 +89,7 @@ public class DAOFlashMemorija {
 			return lo; 
 		}
 	   
-	   public void insertflashMemorija(FlashMemorija fm){
+	/*   public void insertflashMemorija(Proizvod fm){
 			Connection con = null;
 			PreparedStatement pstm = null;
 			ResultSet rs = null;
@@ -147,11 +151,11 @@ public class DAOFlashMemorija {
 			}
 		}
 	   
-	   public FlashMemorija getFLASHMemorijaID (String sifra){
+	   public Proizvod getFLASHMemorijaID (String sifra){
 			Connection con = null;
 			PreparedStatement pstm = null;
 			ResultSet rs = null;
-			FlashMemorija fm=null;
+			Proizvod fm=null;
 			// POMOCNE PROMENLJIVE ZA KONKRETNU METODU 
 		
 			
@@ -169,7 +173,7 @@ public class DAOFlashMemorija {
 
 				if(rs.next()){ // if UMESTO while AKO UPIT VRACA JEDAN REZULTAT
 					// KREIRANJE INSTANCE KLASE PREKO PODRAZUMEVANOG KONSTRUKTORA
-					fm = new FlashMemorija();
+					fm = new Proizvod();
 					// SET-OVANJE SVIH ATRIBUTA KLASE SA ODGOVARAJUCIM VREDNOSTIMA IZ RESULTSET-A rs
 					fm.setAkcija(rs.getString("akcija"));
 					fm.setSifra(rs.getString("sifra"));
@@ -198,11 +202,11 @@ public class DAOFlashMemorija {
 		// DEFINICIJA OSTALIH METODA ... 
 		}
 		
-		public FlashMemorija getRFlasMemorija(){
+		public Proizvod getRFlasMemorija(){
 			Connection con = null;
 			PreparedStatement pstm = null;
 			ResultSet rs = null;
-			FlashMemorija fm=null;
+			Proizvod fm=null;
 					
 	            try {
 				con = ds.getConnection();
@@ -216,7 +220,7 @@ public class DAOFlashMemorija {
 				rs = pstm.getResultSet();
 
 				if(rs.next()){ // if AKO UPIT VRACA JEDAN REZULTAT
-					fm=new FlashMemorija();
+					fm=new Proizvod();
 
 					
 					fm.setAkcija(rs.getString("akcija"));
@@ -243,13 +247,13 @@ public class DAOFlashMemorija {
 			}
 			return fm; 
 		}
-		public ArrayList<FlashMemorija> akcijaFlashMemorija(){
+		public ArrayList<Proizvod> akcijaFlashMemorija(){
 			Connection con = null;
 			PreparedStatement pstm = null;
 			ResultSet rs = null;
 			// POMOCNE PROMENLJIVE ZA KONKRETNU METODU 
-			ArrayList<FlashMemorija> fles = new ArrayList<FlashMemorija>();
-			FlashMemorija fm;
+			ArrayList<Proizvod> fles = new ArrayList<Proizvod>();
+			Proizvod fm;
 					
 	            try {
 				con = ds.getConnection();
@@ -262,7 +266,7 @@ public class DAOFlashMemorija {
 	//****POCETAK AKO UPIT VRACA REZULTAT TREBA SLEDECI DEO 
 				rs = pstm.getResultSet();
 				while(rs.next()){ // if AKO UPIT VRACA JEDAN REZULTAT
-					fm = new FlashMemorija();
+					fm = new Proizvod();
 
 					fm.setSifra(rs.getString("sifra"));
 					fm.setProizvodjac(rs.getString("proizvodjac"));
@@ -286,13 +290,13 @@ public class DAOFlashMemorija {
 			}
 			return fles; 
 		}
-		public ArrayList<FlashMemorija> pretragaFlesMemorija(String search){
+		public ArrayList<Proizvod> pretragaFlesMemorija(String search){
 			Connection con = null;
 			PreparedStatement pstm = null;
 			ResultSet rs = null;
 			// POMOCNE PROMENLJIVE ZA KONKRETNU METODU 
-			ArrayList<FlashMemorija> lo = new ArrayList<FlashMemorija>();
-			FlashMemorija fm = null;
+			ArrayList<Proizvod> lo = new ArrayList<Proizvod>();
+			Proizvod fm = null;
 					
 	            try {
 				con = ds.getConnection();
@@ -310,7 +314,7 @@ public class DAOFlashMemorija {
 				rs = pstm.getResultSet();
 
 				while(rs.next()){ // if AKO UPIT VRACA JEDAN REZULTAT
-					fm = new FlashMemorija();
+					fm = new Proizvod();
 
 					fm.setSifra(rs.getString("sifra"));
 					fm.setProizvodjac(rs.getString("proizvodjac"));
@@ -336,7 +340,7 @@ public class DAOFlashMemorija {
 			return lo; 
 		}
 		
-		
+		*/
 		
 		
 		

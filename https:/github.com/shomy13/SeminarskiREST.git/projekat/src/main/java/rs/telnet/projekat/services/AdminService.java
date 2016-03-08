@@ -1,12 +1,12 @@
 package rs.telnet.projekat.services;
 
-import rs.telnet.projekat.DAO.DAOAdmin;
+import rs.telnet.projekat.DAO.DAOKorisnik;
 
 public class AdminService {
 	public AdminService() {
 		// TODO Auto-generated constructor stub
 	}
-	DAOAdmin da = new DAOAdmin();
+	DAOKorisnik da = new DAOKorisnik();
 
 	public boolean daLiPostoji(String string, String string2 ){
 		if(da.existAdmin(string, string2))
@@ -15,9 +15,9 @@ public class AdminService {
 		return false;
 	}
 	
-	public void updateAdmin(String pass, String user){
+	/*public void updateAdmin(String pass, String user){
 		da.updateAdmin(pass, user);
 		
-	}
+	}*/
 	
 }

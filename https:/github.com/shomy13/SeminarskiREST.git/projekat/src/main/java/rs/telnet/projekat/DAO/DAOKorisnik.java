@@ -10,14 +10,14 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import rs.telnet.projekat.model.Admin;
-public class DAOAdmin {
+import rs.telnet.projekat.model.Korisnk;
+public class DAOKorisnik {
 	  private DataSource ds;
 	  
-	  private static String EXISTADMIN = "SELECT * FROM admin where user = ? and pass=?";
+	  private static String EXISTADMIN = "SELECT * FROM korisnik where email= ? and pass=?";
 	  private static String UPDATEUSER = "UPDATE admin SET pass = ? WHERE user = ?";
 	  
-	  public DAOAdmin(){
+	  public DAOKorisnik(){
 			try {
 				InitialContext cxt = new InitialContext();
 				if ( cxt == null ) { 
@@ -29,20 +29,20 @@ public class DAOAdmin {
 				}
 			}
 	  
-	  public boolean existAdmin(String user, String pass){
+	  public boolean existAdmin(String email, String pass){
 			Connection con = null;
 			PreparedStatement pstm = null;
 			ResultSet rs = null;
 			// POMOCNE PROMENLJIVE ZA KONKRETNU METODU 
 		
-			Admin admin = null;
+			Korisnk k = null;
 					
 	            try {
 				con = ds.getConnection();
 				pstm = con.prepareStatement(EXISTADMIN);
 
 				// DOPUNJAVANJE SQL STRINGA, SVAKI ? SE MORA PODESITI 
-				pstm.setString(1, user);
+				pstm.setString(1, email);
 				pstm.setString(2, pass);
 				pstm.execute();
 
@@ -50,10 +50,13 @@ public class DAOAdmin {
 				rs = pstm.getResultSet();
 
 				if(rs.next()){ // if AKO UPIT VRACA JEDAN REZULTAT
-					admin = new Admin();
-					admin.setId(rs.getInt("id"));
-					admin.setUser(rs.getString("user"));
-					admin.setPass(rs.getString("pass"));
+					k = new Korisnk();
+					k.setId(rs.getInt("id"));
+					k.setIme(rs.getString("ime"));
+					k.setPrezime(rs.getString("prezime"));
+					k.setEmail(rs.getString("email"));
+					k.setPass(rs.getString("pass"));
+					k.setAdmin(rs.getByte("admin"));
 					
 					
 					return true;
@@ -70,7 +73,7 @@ public class DAOAdmin {
 			return false; 
 		}
 	  
-	  public void updateAdmin(String pass, String user ){
+	/*  public void updateAdmin(String pass, String user ){
 			Connection con = null;
 			PreparedStatement pstm = null;
 			ResultSet rs = null;
@@ -93,6 +96,6 @@ public class DAOAdmin {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		}
+		}*/
 	  
 }
