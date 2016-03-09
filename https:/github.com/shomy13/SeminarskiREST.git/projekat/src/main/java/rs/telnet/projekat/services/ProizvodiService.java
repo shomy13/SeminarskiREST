@@ -17,9 +17,39 @@ public class ProizvodiService {
 	
 	public ArrayList<Proizvod>returnAll(){
 		ArrayList<Proizvod> pr = null;
-		pr=dp.returnall();
+		pr = dp.returnall();
 		return pr;
 		
+	}
+	
+	public ArrayList<Proizvod>returnRnd(){
+		ArrayList<Proizvod> pr = null;
+		pr = dp.returnRnd();
+		return pr;
+	}
+	
+	public ArrayList<Proizvod>returnAkcija(){
+		ArrayList<Proizvod> pr = null;
+		pr = dp.returnAkcija();
+		return pr;
+	}
+	
+	public ArrayList<Proizvod>returnAkcijaRnd(){
+		ArrayList<Proizvod> pr = null;
+		pr = dp.returnAkcijaRnd();
+		return pr;
+	}
+	
+	public Proizvod returnBYid(String id){
+		Proizvod pr = new Proizvod();
+		pr = dp.returnById(id);
+		return pr;
+	}
+	
+	public ArrayList<Proizvod> returnByVrsta(String vrsta){
+		ArrayList<Proizvod> pr = null;
+		pr = dp.returnByVrsta(vrsta);
+		return pr;
 	}
 
 }
