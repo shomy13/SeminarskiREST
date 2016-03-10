@@ -32,18 +32,20 @@ public class AdminResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Token existAdmin( Credentials korisnik){
-		if(as.daLiPostoji(korisnik.getEmail(), korisnik.getPass())){
+		if(as.daLiPostoji(korisnik.getEmail(), korisnik.getPass())!=null){
 			Token t = new Token(Jwts.builder()
 					.setSubject(korisnik.getEmail())
 					.signWith(SignatureAlgorithm.HS256, "kljucic")
 					.setIssuedAt(new Date())
 					.setExpiration(new Date(new Date().getTime()+ 1L *60L*1000L))
-					.compact());
+					.compact(), as.daLiPostoji(korisnik.getEmail(), korisnik.getPass()).getAdmin());
 			return t;}
 			else{
 				
 			return null;
-	}}
+	}
+		
+	}
 	
 /*	@PUT
 	@Produces(MediaType.TEXT_PLAIN)

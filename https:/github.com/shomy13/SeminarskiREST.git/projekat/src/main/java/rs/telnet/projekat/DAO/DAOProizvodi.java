@@ -23,7 +23,10 @@ public class DAOProizvodi {
 	private static String RETURNAKCIJARND = "SELECT * FROM proizvod WHERE akcija = ? ORDER BY RAND() LIMIT 10";
 	private static String RETURNBYID = "SELECT * FROM proizvod WHERE id = ?";
 	private static String RETURNBYVRSTA = "SELECT * FROM proizvod WHERE vrsta = ?";
-	  public DAOProizvodi(){
+	private static String INSERTPR = "INSERT INTO proizvod(vrsta, proizvodjac, model, cena, garancija, slika, akcija, tip, kapacitet, socket, dijagonala, takt)"
+			+ " VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+	 
+	public DAOProizvodi(){
 			try {
 				InitialContext cxt = new InitialContext();
 				if ( cxt == null ) { 
@@ -39,42 +42,35 @@ public class DAOProizvodi {
 			Connection con = null;
 			PreparedStatement pstm = null;
 			ResultSet rs = null;
-			// POMOCNE PROMENLJIVE ZA KONKRETNU METODU 
+		
 			ArrayList<Proizvod> lo = new ArrayList<Proizvod>();
-			Proizvod fm = null;
+			Proizvod pr = null;
 					
 	            try {
 				con = ds.getConnection();
 				pstm = con.prepareStatement(RETURNALL);
 
-				// DOPUNJAVANJE SQL STRINGA, SVAKI ? SE MORA PODESITI 
-			
 				pstm.execute();
 
-	//****POCETAK AKO UPIT VRACA REZULTAT TREBA SLEDECI DEO 
 				rs = pstm.getResultSet();
 
-				while(rs.next()){ // if UMESTO while AKO UPIT VRACA JEDAN REZULTAT
-					// KREIRANJE INSTANCE KLASE PREKO PODRAZUMEVANOG KONSTRUKTORA
-					fm = new Proizvod();
-					// SET-OVANJE SVIH ATRIBUTA KLASE SA ODGOVARAJUCIM VREDNOSTIMA IZ RESULTSET-A rs
-					fm.setVrsta(rs.getString("vrsta"));
-					fm.setProizvodjac(rs.getString("proizvodjac"));
-					fm.setModel(rs.getString("model"));
-					fm.setSlika(rs.getString("slika"));
-					fm.setTip(rs.getString("tip"));
-					fm.setKapacitet(rs.getString("kapacitet"));
-					fm.setSocket(rs.getString("socket"));
-					fm.setTakt(rs.getString("takt"));
-					fm.setAkcija(rs.getByte("akcija"));
-					fm.setDijagonala(rs.getBigDecimal("dijagonala"));
-					fm.setCena(rs.getBigDecimal("cena"));
-					fm.setGarancija(rs.getInt("garancija"));
-					fm.setId(rs.getInt("id"));
-					// DODAVANJE INSTANCE U LISTU AKO METODA VRACA LISTU, AKO NE VRACA ONDA NE TREBA 
-					lo.add(fm);
+				while(rs.next()){ 
+					pr = new Proizvod();
+					pr.setVrsta(rs.getString("vrsta"));
+					pr.setProizvodjac(rs.getString("proizvodjac"));
+					pr.setModel(rs.getString("model"));
+					pr.setSlika(rs.getString("slika"));
+					pr.setTip(rs.getString("tip"));
+					pr.setKapacitet(rs.getString("kapacitet"));
+					pr.setSocket(rs.getString("socket"));
+					pr.setTakt(rs.getString("takt"));
+					pr.setAkcija(rs.getByte("akcija"));
+					pr.setDijagonala(rs.getBigDecimal("dijagonala"));
+					pr.setCena(rs.getBigDecimal("cena"));
+					pr.setGarancija(rs.getInt("garancija"));
+					pr.setId(rs.getInt("id"));
+					lo.add(pr);
 				}
-	//****KRAJ OBRADE ResultSet-a	
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -83,7 +79,6 @@ public class DAOProizvodi {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			// VRACANJE REZULTATA AKO METODA VRACA REZULTAT
 			return lo; 
 		}
 	  
@@ -91,42 +86,35 @@ public class DAOProizvodi {
 			Connection con = null;
 			PreparedStatement pstm = null;
 			ResultSet rs = null;
-			// POMOCNE PROMENLJIVE ZA KONKRETNU METODU 
 			ArrayList<Proizvod> lo = new ArrayList<Proizvod>();
-			Proizvod fm = null;
+			Proizvod pr = null;
 					
 	            try {
 				con = ds.getConnection();
 				pstm = con.prepareStatement(RETURNRND);
 
-				// DOPUNJAVANJE SQL STRINGA, SVAKI ? SE MORA PODESITI 
-				
 				pstm.execute();
 
-	//****POCETAK AKO UPIT VRACA REZULTAT TREBA SLEDECI DEO 
+
 				rs = pstm.getResultSet();
 
-				while(rs.next()){ // if UMESTO while AKO UPIT VRACA JEDAN REZULTAT
-					// KREIRANJE INSTANCE KLASE PREKO PODRAZUMEVANOG KONSTRUKTORA
-					fm = new Proizvod();
-					// SET-OVANJE SVIH ATRIBUTA KLASE SA ODGOVARAJUCIM VREDNOSTIMA IZ RESULTSET-A rs
-					fm.setVrsta(rs.getString("vrsta"));
-					fm.setProizvodjac(rs.getString("proizvodjac"));
-					fm.setModel(rs.getString("model"));
-					fm.setSlika(rs.getString("slika"));
-					fm.setTip(rs.getString("tip"));
-					fm.setKapacitet(rs.getString("kapacitet"));
-					fm.setSocket(rs.getString("socket"));
-					fm.setTakt(rs.getString("takt"));
-					fm.setAkcija(rs.getByte("akcija"));
-					fm.setDijagonala(rs.getBigDecimal("dijagonala"));
-					fm.setCena(rs.getBigDecimal("cena"));
-					fm.setGarancija(rs.getInt("garancija"));
-					fm.setId(rs.getInt("id"));
-					// DODAVANJE INSTANCE U LISTU AKO METODA VRACA LISTU, AKO NE VRACA ONDA NE TREBA 
-					lo.add(fm);
+				while(rs.next()){ 
+					pr = new Proizvod();
+					pr.setVrsta(rs.getString("vrsta"));
+					pr.setProizvodjac(rs.getString("proizvodjac"));
+					pr.setModel(rs.getString("model"));
+					pr.setSlika(rs.getString("slika"));
+					pr.setTip(rs.getString("tip"));
+					pr.setKapacitet(rs.getString("kapacitet"));
+					pr.setSocket(rs.getString("socket"));
+					pr.setTakt(rs.getString("takt"));
+					pr.setAkcija(rs.getByte("akcija"));
+					pr.setDijagonala(rs.getBigDecimal("dijagonala"));
+					pr.setCena(rs.getBigDecimal("cena"));
+					pr.setGarancija(rs.getInt("garancija"));
+					pr.setId(rs.getInt("id"));
+					lo.add(pr);
 				}
-	//****KRAJ OBRADE ResultSet-a	
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -135,7 +123,6 @@ public class DAOProizvodi {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			// VRACANJE REZULTATA AKO METODA VRACA REZULTAT
 			return lo; 
 		}
 	  
@@ -156,10 +143,8 @@ public class DAOProizvodi {
 			
 			rs = pstm.getResultSet();
 			
-			while(rs.next()){ // if UMESTO while AKO UPIT VRACA JEDAN REZULTAT
-				// KREIRANJE INSTANCE KLASE PREKO PODRAZUMEVANOG KONSTRUKTORA
+			while(rs.next()){ 
 				pr = new Proizvod();
-				// SET-OVANJE SVIH ATRIBUTA KLASE SA ODGOVARAJUCIM VREDNOSTIMA IZ RESULTSET-A rs
 				pr.setVrsta(rs.getString("vrsta"));
 				pr.setProizvodjac(rs.getString("proizvodjac"));
 				pr.setModel(rs.getString("model"));
@@ -173,7 +158,6 @@ public class DAOProizvodi {
 				pr.setCena(rs.getBigDecimal("cena"));
 				pr.setGarancija(rs.getInt("garancija"));
 				pr.setId(rs.getInt("id"));
-				// DODAVANJE INSTANCE U LISTU AKO METODA VRACA LISTU, AKO NE VRACA ONDA NE TREBA 
 				lo.add(pr);
 			}
 			
@@ -206,10 +190,8 @@ public class DAOProizvodi {
 			
 			rs = pstm.getResultSet();
 			
-			while(rs.next()){ // if UMESTO while AKO UPIT VRACA JEDAN REZULTAT
-				// KREIRANJE INSTANCE KLASE PREKO PODRAZUMEVANOG KONSTRUKTORA
+			while(rs.next()){ 
 				pr = new Proizvod();
-				// SET-OVANJE SVIH ATRIBUTA KLASE SA ODGOVARAJUCIM VREDNOSTIMA IZ RESULTSET-A rs
 				pr.setVrsta(rs.getString("vrsta"));
 				pr.setProizvodjac(rs.getString("proizvodjac"));
 				pr.setModel(rs.getString("model"));
@@ -223,7 +205,6 @@ public class DAOProizvodi {
 				pr.setCena(rs.getBigDecimal("cena"));
 				pr.setGarancija(rs.getInt("garancija"));
 				pr.setId(rs.getInt("id"));
-				// DODAVANJE INSTANCE U LISTU AKO METODA VRACA LISTU, AKO NE VRACA ONDA NE TREBA 
 				lo.add(pr);
 			}
 			
@@ -244,25 +225,18 @@ public class DAOProizvodi {
 			PreparedStatement pstm = null;
 			ResultSet rs = null;
 			Proizvod pr=null;
-			// POMOCNE PROMENLJIVE ZA KONKRETNU METODU 
-		
-			
-					
+	
 	         try {
 				con = ds.getConnection();
 				pstm = con.prepareStatement(RETURNBYID);
 
-				// DOPUNJAVANJE SQL STRINGA, SVAKI ? SE MORA PODESITI 
 				pstm.setString(1, id);
 				pstm.execute();
 
-	//****POCETAK AKO UPIT VRACA REZULTAT TREBA SLEDECI DEO 
 				rs = pstm.getResultSet();
 
-				if(rs.next()){ // if UMESTO while AKO UPIT VRACA JEDAN REZULTAT
-					// KREIRANJE INSTANCE KLASE PREKO PODRAZUMEVANOG KONSTRUKTORA
+				if(rs.next()){ 
 					pr = new Proizvod();
-					// SET-OVANJE SVIH ATRIBUTA KLASE SA ODGOVARAJUCIM VREDNOSTIMA IZ RESULTSET-A rs
 					pr.setVrsta(rs.getString("vrsta"));
 					pr.setProizvodjac(rs.getString("proizvodjac"));
 					pr.setModel(rs.getString("model"));
@@ -276,11 +250,8 @@ public class DAOProizvodi {
 					pr.setCena(rs.getBigDecimal("cena"));
 					pr.setGarancija(rs.getInt("garancija"));
 					pr.setId(rs.getInt("id"));
-					
-					// DODAVANJE INSTANCE U LISTU AKO METODA VRACA LISTU, AKO NE VRACA ONDA NE TREBA 
-					
+
 				}
-	//****KRAJ OBRADE ResultSet-a	
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -289,9 +260,7 @@ public class DAOProizvodi {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			// VRACANJE REZULTATA AKO METODA VRACA REZULTAT
 			return pr; 
-		// DEFINICIJA OSTALIH METODA ... 
 		}
 	  
 	
@@ -300,7 +269,6 @@ public class DAOProizvodi {
 			Connection con = null;
 			PreparedStatement pstm = null;
 			ResultSet rs = null;
-			// POMOCNE PROMENLJIVE ZA KONKRETNU METODU 
 			ArrayList<Proizvod> lo = new ArrayList<Proizvod>();
 			Proizvod pr = null;
 					
@@ -308,17 +276,13 @@ public class DAOProizvodi {
 				con = ds.getConnection();
 				pstm = con.prepareStatement(RETURNBYVRSTA);
 
-				// DOPUNJAVANJE SQL STRINGA, SVAKI ? SE MORA PODESITI 
 				pstm.setString(1, vrsta);
 				pstm.execute();
 
-	//****POCETAK AKO UPIT VRACA REZULTAT TREBA SLEDECI DEO 
 				rs = pstm.getResultSet();
 
-				while(rs.next()){ // if UMESTO while AKO UPIT VRACA JEDAN REZULTAT
-					// KREIRANJE INSTANCE KLASE PREKO PODRAZUMEVANOG KONSTRUKTORA
+				while(rs.next()){ 
 					pr = new Proizvod();
-					// SET-OVANJE SVIH ATRIBUTA KLASE SA ODGOVARAJUCIM VREDNOSTIMA IZ RESULTSET-A rs
 					pr.setVrsta(rs.getString("vrsta"));
 					pr.setProizvodjac(rs.getString("proizvodjac"));
 					pr.setModel(rs.getString("model"));
@@ -332,10 +296,8 @@ public class DAOProizvodi {
 					pr.setCena(rs.getBigDecimal("cena"));
 					pr.setGarancija(rs.getInt("garancija"));
 					pr.setId(rs.getInt("id"));
-					// DODAVANJE INSTANCE U LISTU AKO METODA VRACA LISTU, AKO NE VRACA ONDA NE TREBA 
 					lo.add(pr);
 				}
-	//****KRAJ OBRADE ResultSet-a	
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -344,8 +306,43 @@ public class DAOProizvodi {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			// VRACANJE REZULTATA AKO METODA VRACA REZULTAT
 			return lo; 
 		}
+	   
+	   public void insertProizvod(Proizvod pr){
+		   Connection con = null;
+		   PreparedStatement pstm = null;
+		   ResultSet rs = null;
+		   
+		   try {
+				con = ds.getConnection();
+				pstm = con.prepareStatement(INSERTPR);
+
+				pstm.setString(1, pr.getVrsta());
+				pstm.setString(2, pr.getProizvodjac());
+				pstm.setString(3, pr.getModel());
+				pstm.setBigDecimal(4, pr.getCena());
+				pstm.setInt(5, pr.getGarancija());
+				pstm.setString(6, pr.getSlika());
+				pstm.setByte(7, pr.getAkcija());
+				pstm.setString(8, pr.getTip());
+				pstm.setString(9, pr.getKapacitet());
+				pstm.setString(10, pr.getSocket());
+				pstm.setBigDecimal(11, pr.getDijagonala());
+				pstm.setString(12, pr.getTakt());
+				pstm.execute();
+
+				rs = pstm.getResultSet();
+
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		   
+	   }
 	  
 }

@@ -1,6 +1,7 @@
 package rs.telnet.projekat.services;
 
 import rs.telnet.projekat.DAO.DAOKorisnik;
+import rs.telnet.projekat.model.Korisnk;
 
 public class AdminService {
 	public AdminService() {
@@ -8,11 +9,9 @@ public class AdminService {
 	}
 	DAOKorisnik da = new DAOKorisnik();
 
-	public boolean daLiPostoji(String string, String string2 ){
-		if(da.existAdmin(string, string2))
-		return true;
-		else 
-		return false;
+	public Korisnk daLiPostoji(String email, String pass ){
+		
+		return da.existAdmin(email, pass);
 	}
 	
 	/*public void updateAdmin(String pass, String user){

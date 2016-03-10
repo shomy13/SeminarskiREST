@@ -29,7 +29,7 @@ public class DAOKorisnik {
 				}
 			}
 	  
-	  public boolean existAdmin(String email, String pass){
+	  public Korisnk existAdmin(String email, String pass){
 			Connection con = null;
 			PreparedStatement pstm = null;
 			ResultSet rs = null;
@@ -59,7 +59,7 @@ public class DAOKorisnik {
 					k.setAdmin(rs.getByte("admin"));
 					
 					
-					return true;
+					
 				}
 	//****KRAJ		KRAJ OBRADE ResultSet-a	
 			} catch (SQLException e) {
@@ -70,7 +70,7 @@ public class DAOKorisnik {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			return false; 
+			return k; 
 		}
 	  
 	/*  public void updateAdmin(String pass, String user ){

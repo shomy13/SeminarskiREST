@@ -51,5 +51,9 @@ public class ProizvodiService {
 		pr = dp.returnByVrsta(vrsta);
 		return pr;
 	}
+	
+	public void insertProizvod(Proizvod pr){
+		dp.insertProizvod(pr);
+	}
 
 }
