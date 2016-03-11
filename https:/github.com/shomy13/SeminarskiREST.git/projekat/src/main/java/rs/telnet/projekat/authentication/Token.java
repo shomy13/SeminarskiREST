@@ -4,16 +4,18 @@ public class Token {
 	
 	private String token;
 	private Byte admin;
+	private int id;
 	Token(){
 		
 	}
 	
 	
 
-	public Token(String token, Byte admin) {
+	public Token(String token, Byte admin, int id) {
 		super();
 		this.token = token;
 		this.admin = admin;
+		this.id = id;
 	}
 
 
@@ -36,6 +38,18 @@ public class Token {
 
 	public void setAdmin(Byte admin) {
 		this.admin = admin;
+	}
+
+
+
+	public int getId() {
+		return id;
+	}
+
+
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	
