@@ -13,6 +13,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import rs.telnet.projekat.model.Korisnk;
 import rs.telnet.projekat.services.KorisnikService;
+import rs.telnet.projekat.authentication.AuthFIlter;
 import rs.telnet.projekat.authentication.Credentials;
 import rs.telnet.projekat.authentication.Secure;
 import rs.telnet.projekat.authentication.Token;
@@ -26,10 +27,11 @@ public class KorisnikResource {
 	public Token existUser( Credentials korisnik){
 		if(as.daLiPostoji(korisnik.getEmail(), korisnik.getPass())!=null){
 			Token t = new Token(Jwts.builder()
-					.setSubject(korisnik.getEmail())
+					.setSubject(String.valueOf(as.daLiPostoji(korisnik.getEmail(), korisnik.getPass()).getId()))
+					.claim("admin", String.valueOf(as.daLiPostoji(korisnik.getEmail(), korisnik.getPass()).getAdmin()))
 					.signWith(SignatureAlgorithm.HS256, "kljucic")
 					.setIssuedAt(new Date())
-					.setExpiration(new Date(new Date().getTime()+ 1L *60L*1000L))
+					.setExpiration(new Date(new Date().getTime()+ 15L *60L*1000L))
 					.compact(), as.daLiPostoji(korisnik.getEmail(), korisnik.getPass()).getAdmin(), as.daLiPostoji(korisnik.getEmail(), korisnik.getPass()).getId());
 			return t;}
 			else{

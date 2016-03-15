@@ -11,18 +11,17 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 
-@Secure
+@SecureAdmin
 @Provider
 @Priority(Priorities.AUTHENTICATION)
-public class AuthFIlter implements ContainerRequestFilter{
+public class AuthFilterAdmin implements ContainerRequestFilter{
 
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
-		
-		String AuthHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
+		// TODO Auto-generated method stub
+String AuthHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
 		
 		if(AuthHeader == null || !AuthHeader.startsWith("Bearer")){
 			throw new NotAuthorizedException("Authorization header must be provided");
@@ -39,12 +38,10 @@ public class AuthFIlter implements ContainerRequestFilter{
 			requestContext.abortWith(
 			Response.status(Response.Status.UNAUTHORIZED).build());
 		}
-	
 	}
-
 	private void validateToken(String token) throws Exception{
-		  Jwts.parser().setSigningKey("kljucic").parseClaimsJws(token);
+		  Jwts.parser().setSigningKey("kljucic").require("admin", "1").parseClaimsJws(token);
 		  
 	}
-	
+
 }

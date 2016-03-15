@@ -1,7 +1,7 @@
 package rs.telnet.projekat.DAO;
 
 
-import java.awt.event.InputMethodEvent;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +12,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import rs.telnet.projekat.model.Korisnk;
-import rs.telnet.projekat.model.Proizvod;
+
 public class DAOKorisnik {
 	  private DataSource ds;
 	  

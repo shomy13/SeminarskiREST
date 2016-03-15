@@ -12,6 +12,8 @@ import javax.ws.rs.core.MediaType;
 
 import org.eclipse.persistence.annotations.ReturnInsert;
 
+import rs.telnet.projekat.authentication.Secure;
+import rs.telnet.projekat.authentication.SecureAdmin;
 import rs.telnet.projekat.model.Proizvod;
 import rs.telnet.projekat.services.ProizvodiService;
 
@@ -57,6 +59,7 @@ public class ProizvodiResource {
 	}
 	
 	@PUT
+	
 	public void insertProizvod(Proizvod pr){
 		proizvodiServise.insertProizvod(pr);
 	}
