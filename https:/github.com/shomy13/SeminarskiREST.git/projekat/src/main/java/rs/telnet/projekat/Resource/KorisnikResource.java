@@ -1,5 +1,6 @@
 package rs.telnet.projekat.Resource;
 
+import java.util.ArrayList;
 import java.util.Date;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -13,9 +14,9 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import rs.telnet.projekat.model.Korisnk;
 import rs.telnet.projekat.services.KorisnikService;
-import rs.telnet.projekat.authentication.AuthFIlter;
 import rs.telnet.projekat.authentication.Credentials;
 import rs.telnet.projekat.authentication.Secure;
+import rs.telnet.projekat.authentication.SecureAdmin;
 import rs.telnet.projekat.authentication.Token;
 @Path("/korisnik")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -50,7 +51,7 @@ public class KorisnikResource {
 	
 	@PUT
 	@Produces(MediaType.TEXT_PLAIN)
-	public boolean getByEmail(Korisnk k){
+	public boolean insertKorisnik(Korisnk k){
 		if(as.returnByEmail(k.getEmail()))
 			
 		return false;
@@ -60,7 +61,23 @@ public class KorisnikResource {
 		return true;
 	}}
 	
-	
+	@PUT
+	@SecureAdmin
+	@Path("/admin")
+	@Produces(MediaType.TEXT_PLAIN)
+	public boolean insertAdmin(Korisnk k){
+		if(as.returnByEmail(k.getEmail()))
+			return false;
+		else{
+			as.insertAdmin(k);
+			return true;
+		}
+	}
+	@GET
+	//@SecureAdmin
+	public ArrayList<Korisnk> getall(){
+		return as.returnall();
+	}
 /*	@PUT
 	@Produces(MediaType.TEXT_PLAIN)
 	public String updateAdmin(@QueryParam("pass") String pass,

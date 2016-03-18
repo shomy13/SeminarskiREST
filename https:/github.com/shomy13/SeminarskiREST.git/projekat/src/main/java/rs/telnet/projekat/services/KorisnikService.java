@@ -1,5 +1,7 @@
 package rs.telnet.projekat.services;
 
+import java.util.ArrayList;
+
 import rs.telnet.projekat.DAO.DAOKorisnik;
 import rs.telnet.projekat.model.Korisnk;
 
@@ -29,6 +31,13 @@ public class KorisnikService {
 		return da.returnById(id);
 	}
 	
+	public void insertAdmin(Korisnk k){
+		da.insertAdmin(k);
+	}
+	
+	public ArrayList<Korisnk> returnall(){
+		return da.returnAll();
+	}
 	/*public void updateAdmin(String pass, String user){
 		da.updateAdmin(pass, user);
 		
